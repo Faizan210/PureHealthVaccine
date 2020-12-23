@@ -30,3 +30,15 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 Aravind:
 -----------
 https://octoperf.com/blog/2019/08/22/kraken-angular-workspace-multi-application-project/
+https://blog.angulartraining.com/fake-your-angular-backend-until-you-make-it-8d145f713e14
+
+## To start locally:
+
+npm run start:deo
+npm run start:registration
+npm run start:nursing
+
+## To build for Production:
+
+npm run build
+
