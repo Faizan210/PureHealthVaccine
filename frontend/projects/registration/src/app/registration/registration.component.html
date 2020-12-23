@@ -1,0 +1,681 @@
+<main class="my-5">
+  <div class="container-fluid">
+    <ul class="bd-wizard-step-icon nav nav-tabs wizard-title" role="tablist">
+      <!-- Registration -->   
+       
+    <li class="nav-item" [style.background-color]="clsReg ? '#fff' : ''"      
+    (click)="navNext('Reg')">
+      <a [class]="navReg" data-toggle="tab" href="#Registration">
+        <h3>
+          <div class="media">
+            <div class="step-icon"><i class="fa fa-registered"></i></div>
+            <div class="media-body">
+              <div class="wizard-title">Registration</div>
+              <div class="step-subtitle">Step 1</div>
+            </div>
+          </div>
+        </h3>
+      </a>
+    </li>
+     <!-- Questionnaire --> 
+    <li class="nav-item" [style.background-color]="clsQues ? '#fff' : ''" 
+    [style.pointer-events]="disQues ? 'none' : ''" 
+       (click)="navNext('Ques', 'nav')"
+       >
+      <a [class]="navQues" data-toggle="tab" href="#Questionnaire" >
+        <h3>
+          <div class="media">
+            <div class="step-icon"><i class="fa fa-pencil fa-fw"></i></div>
+            <div class="media-body">
+              <div class="wizard-title">Questionnaire</div>
+              <div class="step-subtitle">Step 2</div>
+            </div>
+          </div>
+        </h3>
+      </a>
+    </li>
+    <!-- Facility -->
+    <li class="nav-item" [style.background-color]="clsFac ? '#fff' : ''" [style.pointer-events]="disFac ? 'none' : ''" 
+     (click)="navNext('Fac')">
+      <a [class]="navFac" data-toggle="tab" href="#Facility">
+        <h3>
+          <div class="media">
+            <div class="step-icon"><i class="fa fa-map-marker"></i></div>
+            <div class="media-body">
+              <div class="wizard-title">Facility</div>
+              <div class="step-subtitle">Step 3</div>
+            </div>
+          </div>
+        </h3>
+      </a>
+    </li>  
+      <!-- Appointment -->    
+    <li class="nav-item" [style.background-color]="clsApp ? '#fff' : ''"
+    [style.pointer-events]="disApp ? 'none' : ''"  (click)="navNext('App')">
+      <a [class]="navApp" data-toggle="tab" href="#Appointment">
+        <h3>
+          <div class="media">
+            <div class="step-icon"><i class="fa fa-clock-o"></i></div>
+            <div class="media-body">
+              <div class="wizard-title">Appointment</div>
+              <div class="step-subtitle">Step 3</div>
+            </div>
+          </div>
+        </h3>
+      </a>
+    </li>
+     <!-- Consent -->
+    <li class="nav-item" [style.background-color]="clsCons ? '#fff' : ''"
+    [style.pointer-events]="disCons ? 'none' : ''"  (click)="navNext('Cons')">
+      <a [class]="navCons" data-toggle="tab" href="#Consent">
+        <h3>
+          <div class="media">
+            <div class="step-icon"><i class="fa fa-check"></i></div>
+            <div class="media-body">
+              <div class="wizard-title">Consent</div>
+              <div class="step-subtitle">Step 4</div>
+            </div>
+          </div>
+        </h3>
+      </a>
+    </li>
+     <!-- Confirmation -->
+     
+    <li class="nav-item" [style.background-color]="clsConf ? '#fff' : ''" 
+    [style.pointer-events]="disConf ? 'none' : ''" (click)="navNext('Conf')">
+      <a [class]="navConf" data-toggle="tab" href="#Confirmation">
+        <h3>
+          <div class="media">
+            <div class="step-icon"><i class="fa fa-thumbs-up"></i></div>
+            <div class="media-body">
+              <div class="wizard-title">Confirmation</div>
+              <div class="step-subtitle">Step 5</div>
+            </div>
+          </div>
+        </h3>
+      </a>
+    </li>
+  </ul>
+     <!-- Tab panes -->
+     <div class="tab-content content-wrapper content">
+      <ng-template [ngIf]="showSuccessAlert">
+      <div class="alert alert-success alert-dismissible fade show" role="alert" >
+        <strong>{{successMessageText}}</strong> 
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    </ng-template>
+    <ng-template [ngIf]="showErrorAlert">
+      <div class="alert alert-danger alert-dismissible fade show" role="alert" >
+        <strong>{{errorMessageText}}</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    </ng-template>
+
+       <!-- Registration -->      
+      <div id="Registration" [class]="tabReg"><br>
+        <div class="row">
+          <div class="card col-md-5" style="height: 470px;">
+            <div class="card-body">
+              <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+              <div class="content-wrapper">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                    <label for="emiratesId" class="">Emirates ID</label>
+                    <input type="text" name="emiratesId" formControlName="emiratesId" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.emiratesId.errors }"  placeholder="784199215269269"
+                    [(ngModel)] = "sendOTPRequest.emiratesId">
+                    <div *ngIf="submitted && f.emiratesId.errors" class="invalid-feedback">
+                      <div *ngIf="f.emiratesId.errors.required">Emirates ID is required</div>
+                  </div>
+                    </div>
+                  </div>               
+                </div>
+                <hr>
+                 <div class="row">
+                  <div class="col-md-12">
+                    <label for="firstName" class="">Email ID</label>
+                    <input type="text" name="emailId" id="emailId" class="form-control"  placeholder="Enter Email ID"
+                    [(ngModel)] = "sendOTPRequest.emailId">
+                  </div>
+                </div>
+                <hr>
+                <div class="row form-group">
+                 <div class="col-md-12">
+                   <label for="firstName" class="">Phone number</label>
+                   <input type="text" name="mobileNumber" formControlName="mobileNumber"  id="mobileNumber" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.mobileNumber.errors }" placeholder="0565478426"
+                   [(ngModel)] = "sendOTPRequest.mobileNumber">
+                   <div *ngIf="submitted && f.mobileNumber.errors" class="invalid-feedback">
+                    <div *ngIf="f.mobileNumber.errors.required">Mobile number is required</div>
+                </div>
+                  
+                 </div>
+               </div>
+               <hr>
+              
+              </div>
+             
+              <div class="row">
+                <div class="col-md-12  formGroup">
+                  <button type="button" class="btn btn-primary btn-lg btn-block" (click)="sendOTP()"  > Send OTP</button>
+                </div>
+              </div>
+            </form>
+
+            </div>
+          </div>
+          <div class="col-md-1"></div>
+          <div class="card col-md-6" *ngIf="showEmiratesIdDetails">
+            <div class="card-body">
+              <div class="content-wrapper">
+                <div class="row">
+                  <div class="col-md-12">
+                    <label for="name" class="">Name</label>
+                    <input type="text" name="name" class="form-control" 
+                     readonly
+                     [(ngModel)] = "verifyOTPResponse.name"
+                     >
+                  </div>               
+                </div>
+                <hr>
+                 <div class="row">
+                  <div class="col-md-12">
+                    <label for="gender" class="">DOB</label>
+                    <input type="text" name="dob"  class="form-control" 
+                     readonly
+                     [(ngModel)] = "verifyOTPResponse.dob">
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                 <div class="col-md-12">
+                   <label for="gender" class="">Gender</label>
+                   <input type="text" name="gender" class="form-control" 
+                    readonly
+                    [(ngModel)] = "verifyOTPResponse.gender">
+                 </div>
+               </div>
+               <hr>
+               <div class="row">
+                <div class="col-md-12">
+                  <label for="age" class="">Age</label>
+                  <input type="text" name="age"  class="form-control" 
+                   readonly
+                   [(ngModel)] = "verifyOTPResponse.age">
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-md-12">
+                  <label for="nationality" class="">Nationality</label>
+                  <input type="text" name="firstName" class="form-control" 
+                   readonly
+                   [(ngModel)] = "verifyOTPResponse.nationality">
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-md-12">
+                  <label for="prefferedLanguage" class="">Preferred Language</label>
+                  <input type="text" name="prefferedLanguage" class="form-control"
+                  [(ngModel)] = "verifyOTPResponse.preferredLanguage"
+                  readonly>
+                </div>
+              </div>
+              </div>
+            </div>
+          </div>
+          <div class="card col-md-5" *ngIf="showVerifyOTPField" style="height: 250px;">
+            <div class="card-body">
+              <div class="content-wrapper formGroup">
+                <form [formGroup]="otpForm" (ngSubmit)="onSubmitOtp()">
+                <div class="row">
+                  <div class="col-md-12" >
+                    <label for="otp" class=""><h4>Verify OTP</h4></label>
+                    <input type="text" name="otp" formControlName="otp" [ngClass]="{ 'is-invalid': submittedOTP && r.otp.errors }" class="form-control" placeholder="Enter OTP number"
+                    [(ngModel)] = "verifyOTPRequest.otp">
+                    <div *ngIf="submittedOTP && r.otp.errors" class="invalid-feedback">
+                      <div *ngIf="r.otp.errors.required">OTP is required</div>
+                  </div>
+                  </div>               
+                </div>           
+               <hr>
+               <div class="row">
+                <div class="col-md-12">
+                  <button type="button" class="btn btn-primary btn-lg btn-block" style="float: right;"
+                  (click)="verifyOTP()" > Verify OTP</button>
+                </div>
+              </div>
+            </form>
+          </div>
+            </div>
+          </div>  
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-md-12">   
+          <button type="button" class="btn btn-primary next-button" style="float:right;"
+          (click) = "navNext('Ques')" *ngIf="otpNext"> Next</button>   
+        </div>
+      </div>
+      </div>
+        <!-- Questionnaire --> 
+        <div id="Questionnaire" [class]="tabQues">
+          <div class="row">
+            <div class="card col-md-12">
+              <div class="card-body">
+                <div class="content-wrapper">
+                  <div class="row">
+                    <div class="col-md-7">
+                      <label for="firstName" class="">Have you had Covid-19?</label>
+                    </div>
+                      <div class="col-md-3">
+                        <div class="checkbox">
+                          <label style="font-size: 2em">
+                              <input [(ngModel)]="questionariesRequest.hadCovid19" type="checkbox">
+                              <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                              Yes
+                          </label>
+                      </div>
+                      </div>  
+                                  
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-md-7">
+                      <label for="firstName" class="">Have you been tested for COVID-19 Anti-bodies?                                                                              </label>
+                    </div>
+                      <div class="col-md-3">
+                        <div class="checkbox">
+                          <label style="font-size: 2em">
+                              <input [(ngModel)]="questionariesRequest.covid19AntiBodies" type="checkbox">
+                              <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                              Yes
+                          </label>
+                      </div>
+                      </div> 
+                                  
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-md-7">
+                      <label for="firstName" class="">Have you been vaccinated against COVID-19 in the last month?                                             </label>
+                    </div>
+                      <div class="col-md-3">
+                        <div class="checkbox">
+                          <label style="font-size: 2em">
+                              <input [(ngModel)]="questionariesRequest.covid19Vaccinated" type="checkbox">
+                              <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                              Yes
+                          </label>
+                      </div>
+                      </div>                                 
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-md-7">
+                      <label for="firstName" class="">Do you have any chronic diseases?                                                                                                </label>
+                    </div>
+                      <div class="col-md-3">
+                        <div class="checkbox">
+                          <label style="font-size: 2em">
+                              <input [(ngModel)]="questionariesRequest.chronicDisease" type="checkbox">
+                              <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                              Yes
+                          </label>
+                      </div>
+                      </div>   
+                                  
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-md-7">
+                      <label for="firstName" class="">Have you had any major operations/surgeries in the past year? </label>
+                    </div> 
+                      <div class="col-md-3">
+                        <div class="checkbox">
+                          <label style="font-size: 2em">
+                              <input [(ngModel)]="questionariesRequest.majorOperationSurgery" type="checkbox">
+                              <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                              Yes
+                          </label>
+                      </div>
+                      </div>
+                                  
+                  </div>
+                  <hr>
+                  <div class="row" *ngIf="genderVal">
+                  
+                      <div class="col-md-7">
+                      <label for="firstName" class="">Are you pregnant or planning to conceive for the next 6 months?</label>
+                    </div> 
+                    <div class="col-md-3">
+                      <div class="checkbox">
+                        <label style="font-size: 2em">
+                            <input [(ngModel)]="questionariesRequest.isPregnantOrPlanning" type="checkbox">
+                            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                            Yes
+                        </label>
+                    </div>
+                    </div>                        
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-md-7">
+                      <label for="firstName" class="">Have you had any acute coronary syndrome or stroke in the past year?                                 </label>
+                    </div> 
+                      <div class="col-md-3">
+                        <div class="checkbox">
+                          <label style="font-size: 2em">
+                              <input [(ngModel)]="questionariesRequest.coronarySyndromeStroke" type="checkbox">
+                              <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                              Yes
+                          </label>
+                      </div>
+                      </div> 
+                                  
+                  </div>
+
+                  <hr>
+                </div>
+              </div>
+            </div>
+        
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-md-12">                
+            <button type="button" class="btn btn-primary next-button" style="float:right;" (click) = "navNext('Fac')"> Next</button> 
+            <button type="button" class="btn btn-primary next-button" style="float:right; background: #919aa3;"
+            (click) = "navNext('Reg')"> Previous</button>   
+          </div>
+        </div>
+        </div>
+       <!-- Facility -->
+       <div id="Facility" [class]="tabFac">
+        <div class="row">
+          <div class="col-sm-6 col-lg-3">
+     
+  </div>
+  <div class="col-sm-6 col-lg-3">
+     
+  </div>
+
+
+          <div class="col-sm-12 col-lg-3">
+              <div class="form-group row pt-3">
+                  <label for="inputEmail3" class="col-sm-3  control-label col-form-label">CITY</label>
+                  <div class="col-sm-9">
+                      <select class="form-control custom-select" (change)="selectCityFacilities($event.target.value)">
+                        <option value="0">--Select--</option>
+                       <option  *ngFor="let city of listCity" value={{city.emirateID}}>
+                        {{city.emirateName}}
+                      </option>
+                      </select>
+                  </div>
+              </div>
+          </div>
+          <div class="col-sm-12 col-lg-3">
+              <div class="form-group row pt-3">
+                  <label for="inputEmail3" class="col-sm-3  control-label col-form-label">Vaccine</label>
+                  <div class="col-sm-9">
+                      <select class="form-control custom-select" data-placeholder="--Choose Nationality--" tabindex="1">
+                          <option value="0">COVID 19</option>
+                      </select>
+                  </div>
+              </div>
+          </div>
+  </div> 
+        <div class="row">
+          <div class="card col-md-12">
+            <div class="card-body">
+              <div class="content-wrapper">
+                <div class="content-wrapper">
+                  <div class="row"> 
+                    <div class="col-md-12">
+                      <label for="firstName" class="">Facility map</label>
+                      
+                    </div>               
+                  </div>
+                  <hr>
+                  
+                  <div class="row" style="height: 500px;">
+                    <div class="col-sm-12 col-lg-8 htSize" fxFlex="1 1 100%" #map>
+                    <agm-map 
+           [latitude]='lat' 
+           [longitude]='long'  (mapClick)="placeMarker($event)" 
+           >
+        
+            <agm-marker 
+                [latitude]="lat" 
+                [longitude]="long" (mapClick)="placeMarker($event)" [style.height.px]="map.offsetHeight">    
+            </agm-marker>
+        </agm-map>
+                </div>
+                <div class="col-sm-12 col-lg-4">
+                    
+           
+                        <div class="card"  *ngFor="let facility of listFacilities">
+                            <div class="card-body">
+                                <h4 class="card-title">{{facility.locationDesc}}</h4>
+                               
+                                    <div class="">
+                                      <label class="switch">
+                                            <div class="switch">
+                                                <input id={{facility.locationID}}   (change)="eventCheck(facility)"  name="locations" type="radio"  >
+                                                <span class="slider round"></span>
+                                                <label class="custom-control-label touch" for={{facility.locationID}}> </label>
+                                            </div>
+                                            </label>  
+                                    
+                                    </div>
+                                
+                            </div>
+                          </div>
+        
+                </div>
+                </div>
+        
+        
+                  <hr>
+                
+                 
+                </div>
+                <hr>
+              
+               
+              </div>
+            </div>
+          </div>      
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-md-12">                
+          <button type="button" class="btn btn-primary next-button" style="float:right;" *ngIf="otpFacility" (click)="displayAppointmentSlots()"> Next</button> 
+          <button type="button" class="btn btn-primary next-button" style="float:right; background: #919aa3;"
+          (click) = "navPrevious('Ques')"> Previous</button>   
+        </div>
+      </div>
+      </div>
+       <!-- Appointment -->
+       <div id="Appointment" [class]="tabApp">
+        <ng-template [ngIf]="showAppointmentAlert">
+          <div class="alert alert-danger alert-dismissible fade show" role="alert" >
+            <strong>{{errorAppointmentText}}</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        </ng-template>
+        <div class="row">
+          <div class="card col-md-4" style="height: 300px;">
+          <div class="card-body">
+            <div class="content-wrapper">           
+              <div class="row">
+                <div class="col-md-12">
+                  <label for="location" class="">Facility</label>
+                  <input type="text" name="location" class="form-control" [value]="locationName" readonly>
+                </div>               
+              </div>
+              <hr>
+               <div class="row">
+                <div class="col-md-12">
+                  <label for="date" class="">Date</label>
+                  <input type="date" class="form-control"  [(ngModel)]="appointmentRequest.appointmentDate">
+                </div>
+              </div>
+              <hr>              
+             <div class="row">
+              <div class="col-md-12">
+                <button type="button" class="btn btn-primary btn-lg btn-block" (click)="displayAppointmentSlots()"> Search Available Slots</button>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>   
+        <div class="col-md-1"></div>
+        <div class="card col-md-7">
+          <div class="card-body">
+            <div class="content-wrapper">
+              <div class="row">
+                <div class="col-md-12">
+                  <label for="firstName" class="">Slots Status:</label>
+                  <label class="btn btn-outline-primary" style="margin: 5px;"> Available
+                    <input type="radio"  name="slots" style="visibility:hidden;"/> 
+                   </label> 
+                   <label class="btn btn-outline-primary"  style="margin: 5px; background: lightgray;"> Booked
+                    <input type="radio"  name="slots" style="visibility:hidden;"/> 
+                   </label> 
+                </div>               
+              </div>
+              <hr>
+               <div class="row">
+                <div class="col-md-12">
+                
+              <label class="btn btn-outline-primary" style="margin: 5px;"  
+              *ngFor="let slot of appointmentResult"
+              [style.background]="slot.isBooked ? 'lightgray' : ''"
+               > {{slot.slotStartTime}}
+            <input type="checkbox" style="visibility: hidden;"                   
+              #data
+             [value]="slot.slotID" 
+             (click)="selectedSlot($event)"
+             [disabled] = "slot.isBooked" /> 
+            
+          </label> 
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>    
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-md-12">                
+        <button type="button" class="btn btn-primary next-button" style="float:right;"
+        (click) = "navNext('Cons')"  *ngIf="nextSlot"> Next</button> 
+        <button type="button" class="btn btn-primary next-button" style="float:right; background: #919aa3;"
+        (click) = "navPrevious('Fac')"> Previous</button>   
+      </div>
+    </div>
+      </div>
+       <!-- Consent -->
+       <div id="Consent" [class]="tabCons">
+        <div class="row">
+          <div class="card col-md-12">
+            <div class="card-body">
+              <div class="content-wrapper">
+                <div class="row">
+                  <div class="col-md-12">
+                    <h4 class="card-title">Statement of Participant</h4>
+                    <p>
+                        I have fully read the COVID-19 vaccine information leaflet. As a result, I am aware of the risks and
+                        benefits of the COVID-19 vaccine and received verbal explanation about the use of COVID-19
+                        vaccine.
+            
+                    </p>
+                    <div>
+                        <h4 class="card-title">By signing this consent I hereby acknowledge that:</h4>
+                       
+                       <ol>
+                           <li> All my questions has been answered to my satisfaction.</li>
+                           <li>I understand that my participation is voluntary by taking tow doses from this vaccine .</li>
+                           <li>I understand that the use of this vaccine might cause some side effects, ranging from some common reactions like pain, tenderness, redness, induration and pruritus at the vaccination site to systemic reactions such as fever, headache, fatigue, nausea, vomiting, diarrhea, cough, allergy, muscle pain, arthralgia, lethargy and convulsion, which may occur in some patients. Generally, the mild symptoms subsides without treatment. If experienced moderate to severe symptoms, then symptomatic treatment under the guidance of doctors is required.<br /></li>
+                           <li> I understand that a copy of this consent will be provided to me and this information will be kept confidential.</li>
+                           <li> I understand that the vaccine is not registered yet and got Emergency authorization for use as it is still under the final stage phase 3 of clinical trial and the efficacy and safety of the vaccine is yet to be confirmed.
+                           </li>
+                           <li> I understand that signing this form does not waive any of my medical and legal rights.</li>
+                           <li> I understand that I still have to take all precautionary measures to prevent coronavirus infection(COVID-19).</li>
+                           <li>Vaccination, related health services, and treatment of side effects will be covered by the Ministry.</li>
+            
+                       </ol>
+                    
+                    </div>
+                    <hr>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="customCheck1" [checked]="ConsentChk"  (change)="onConsent($event.target.checked)">
+                        <label class="custom-control-label" for="customCheck1"> <h4 class="card-title">I agree to take the covid-19 vaccine</h4></label>
+                    </div>
+                  </div>               
+                </div>
+               
+              </div>
+            </div>
+          </div>       
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-md-12">                
+          <button type="button" class="btn btn-primary next-button" style="float:right;" *ngIf="nextConsent" (click) = "saveRegistration()"> Complete</button> 
+          <button type="button" class="btn btn-primary next-button" style="float:right; background: #919aa3;" (click) = "navPrevious('App')"> Previous</button>   
+        </div>
+      </div>
+      </div>
+       <!-- Confirmation -->
+       <div id="Confirmation"  [class]="tabConf">
+        <div class="row">
+          <div class="card col-md-12">
+            <div class="card-body">
+              <div class="content-wrapper">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="text-center">
+                      <img src="assets/images/checkmark.gif" height="200px;">
+                  </div>
+                  <div class="text-center">
+                      <h4 class="card-title">Thank you for submitting your application with PureHealth.</h4>
+                      <p class="card-title">Your Application Number is <b>{{applicationID}}</b>, You will soon receive confirmation on Email and SMS. </p>
+                      <hr>
+                      <div class="text-center">
+                        <button type="button" class="btn btn-primary" (click)="navNext('Reg')"> New Registration</button>
+                      </div>
+                  </div>
+                 
+                  </div>               
+                </div>
+               
+              </div>
+            </div>
+          </div>       
+        </div>
+        <hr>
+        <!-- <div class="row">
+          <div class="col-md-12">                
+          <button type="button" class="btn btn-primary next-button" style="float:right;"> Next</button>  
+        </div> -->
+      </div>
+      </div>
+    </div>     
+    
+</main> 
+
+ 
+
+
+
+
+
+
