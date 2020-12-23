@@ -10,7 +10,8 @@
     "build:dev": "ng build registration --aot --configuration=dev --baseHref /registration/ && ng build deo --aot --configuration=dev --baseHref /deo/ && ng build nursing --aot --configuration=dev --baseHref /nursing/",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "api": "json-server api/db.json --routes api/routes.json --no-cors=true"
   },
   "private": true,
   "dependencies": {

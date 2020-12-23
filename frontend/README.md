@@ -42,3 +42,9 @@ npm run start:nursing
 
 npm run build
 
+## To run mock api locally:
+
+npm run api
+
+Try : http://localhost:3000/api/teams
+
