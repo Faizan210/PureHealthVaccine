@@ -6,7 +6,7 @@
     "start:registration": "ng serve --project=registration",
     "start:deo": "ng serve --project=deo",
     "start:nursing": "ng serve --project=nursing",
-    "build:prod": "ng build registration --prod --baseHref /registration/ && ng build deo --prod --baseHref /deo/ && ng build nursing --prod --baseHref /nursing/",
+    "build": "ng build registration --aot --configuration=production --baseHref /registration/ && ng build deo --aot --configuration=production --baseHref /deo/ && ng build nursing --aot --configuration=production --baseHref /nursing/",
     "build:dev": "ng build registration --aot --configuration=dev --baseHref /registration/ && ng build deo --aot --configuration=dev --baseHref /deo/ && ng build nursing --aot --configuration=dev --baseHref /nursing/",
     "test": "ng test",
     "lint": "ng lint",
